@@ -47,12 +47,7 @@ mkdir -p data/raw data/processed
 # Download the dataset and save it to the raw data directory
 curl -LO "$URL" --output-dir data/raw
 
-# Decompress the downloaded file while keeping the original file
-# NOAA now appears to publish plain CSV files, gunzip is not needed. If you encounter a .gz file, uncomment the following line to decompress it.
-# gunzip -k "data/raw/$(basename "$URL")"
-
-# Convert the decompressed CSV file to Parquet format using ogr2ogr
-# NOAA coordinates are stored as BEGIN_LON and BEGIN_LAT
+# Convert the CSV file to Parquet format using ogr2ogr
 # Tell GDAL which fields to convert into geometry
 ogr2ogr.exe -f Parquet data/processed/storms_${YEAR}_${MONTH}.parquet \
     -oo X_POSSIBLE_NAMES=LON \
