@@ -1,9 +1,9 @@
 #!/usr/bin/env bash     ## Run this script with Bash.
 #
-# pipeline.sh - Download a year of NOAA Storm Events, convert to GeoParquet.
+# pipeline.sh - Download a month of NOAA Storm Event locations, convert to GeoParquet.
 #
-# Usage:  ./pipeline.sh [YEAR]
-# Example: ./pipeline.sh 2024
+# Usage:  ./pipeline.sh [YEAR] [MONTH]
+# Example: ./pipeline.sh 2024 05
 #
 # Requires: bash, curl, gunzip, ogr2ogr (GDAL >= 3.5)
 
@@ -22,10 +22,10 @@ MONTH=${2:-01}
 
 # Set a variable for the URL of the NOAA storm events dataset
 # Set a variable for the search pattern to find the correct file for the specified year and month
-# Directly access the NOAA data directory for the specified year and month, and search for the appropriate CSV file.
 BASE_URL="https://www.ncei.noaa.gov/data/storm-events/access/original/${YEAR}/"
 SEARCH="StormEvents_locations_s${YEAR}${MONTH}"
 
+# Directly access the NOAA data directory for the specified year and month, and search for the appropriate CSV file.
 FILE_NAME=$(
     curl -s "$BASE_URL" |
     grep "$SEARCH" |
